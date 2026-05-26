@@ -4,6 +4,8 @@ import logoImage from '../img/logo.jpg';
 import familyImage from '../img/family.jpg';
 import churchImage from '../img/chiesa.jpg';
 import socialImage from '../img/social.jpg';
+import qrFranchi from '../img/QR/franchi.jpeg';
+import qrEuro from '../img/QR/euro.jpeg';
 
 function SectionWave({ className = '' }) {
   return (
@@ -59,18 +61,18 @@ const content = {
   it: {
     menu: ['Home', 'Chi Siamo', 'Orari', 'Offerte', 'FAQ', 'Contatto'],
     aboutEyebrow: 'Chi Siamo',
-    aboutTitle: 'Una comunita cristiana che accoglie, adora e cammina insieme.',
+    aboutTitle: 'Una comunità cristiana che accoglie, adora e cammina insieme.',
     aboutText:
-      'Ministero Internazionale Kabod Ticino e una casa spirituale dove il culto, la comunita e la presenza dello Spirito Santo si incontrano. Crediamo in una fede che trasforma la vita quotidiana, rafforza le famiglie e apre spazi reali di guarigione, speranza e crescita.',
+      'Ministero Internazionale Kabod Ticino è una casa spirituale dove il culto, la comunità e la presenza dello Spirito Santo si incontrano. Crediamo in una fede che trasforma la vita quotidiana, rafforza le famiglie e apre spazi reali di guarigione, speranza e crescita.',
     aboutTextSecondary:
-      'Qui troverai un ambiente accogliente, multiculturale e familiare, in cui ogni persona viene incoraggiata a conoscere Dio, vivere la Sua Parola e costruire relazioni sincere. La nostra missione e servire con amore, formare discepoli e vedere vite rinnovate dalla grazia di Gesu.',
+      'Qui troverai un ambiente accogliente, multiculturale e familiare, in cui ogni persona viene incoraggiata a conoscere Dio, vivere la Sua Parola e costruire relazioni sincere. La nostra missione è servire con amore, formare discepoli e vedere vite rinnovate dalla grazia di Gesù.',
     missionCards: [
       {
         title: 'Adorazione',
         text: 'Culto autentico, preghiera fervente e spazio alla guida dello Spirito Santo.',
       },
       {
-        title: 'Comunita',
+        title: 'Comunità',
         text: 'Una famiglia di fede che cammina insieme con amore, cura e sostegno reciproco.',
       },
       {
@@ -81,7 +83,7 @@ const content = {
     pastorEyebrow: 'Pastor & Leadership',
     pastorTitle: 'Una guida fondata sulla fede, la visione e il servizio alle persone.',
     pastorText:
-      'Pr. Salvatore D’Angella, sposato con Manuela Liguori e padre di due figlie, guida il ministero con passione, sensibilita spirituale e una chiara visione pastorale. Il suo desiderio e vedere persone guarite, fortificate nella fede e radicate in una comunita viva e matura.',
+      'Pr. Salvatore D’Angella, sposato con Manuela Liguori e padre di due figlie, guida il ministero con passione, sensibilità spirituale e una chiara visione pastorale. Il suo desiderio è vedere persone guarite, fortificate nella fede e radicate in una comunità viva e matura.',
     pastorTextSecondary:
       'Attraverso la predicazione, la cura pastorale e una leadership dedicata, serve la chiesa con il cuore di chi vuole accompagnare ogni persona in un percorso reale di crescita, speranza e incontro con Dio.',
     pastorCards: [
@@ -91,45 +93,45 @@ const content = {
       },
       {
         title: 'Servizio',
-        text: 'Guidare con integrita, amore pastorale e attenzione concreta alle persone e ai loro bisogni.',
+        text: 'Guidare con integrità, amore pastorale e attenzione concreta alle persone e ai loro bisogni.',
       },
       {
-        title: 'Eredita',
+        title: 'Eredità',
         text: 'Trasmettere fede, speranza e una cultura di presenza, preghiera e dedizione al Regno di Dio.',
       },
     ],
     churchEyebrow: 'La Chiesa',
     churchTitle: 'Nel cuore di Gravessano, Ticino, con un’atmosfera di famiglia e una visione aperta a tutti.',
     churchText:
-      'La nostra chiesa si trova a Gravessano, Ticino, ed e un luogo dove nuovi visitatori, famiglie, giovani e persone di ogni provenienza possono sentirsi subito accolti. Qui troverai adorazione, preghiera, crescita spirituale e relazioni autentiche in un ambiente sereno e caloroso.',
+      'La nostra chiesa si trova a Gravessano, Ticino, ed è un luogo dove nuovi visitatori, famiglie, giovani e persone di ogni provenienza possono sentirsi subito accolti. Qui troverai adorazione, preghiera, crescita spirituale e relazioni autentiche in un ambiente sereno e caloroso.',
     churchTextSecondary:
-      'Crediamo in una comunita multiculturale, viva e accessibile, dove tutti sono benvenuti e dove ogni incontro diventa un’occasione per conoscere Dio piu profondamente e fare un passo nuovo nel proprio cammino di fede.',
+      'Crediamo in una comunità multiculturale, viva e accessibile, dove tutti sono benvenuti e dove ogni incontro diventa un’occasione per conoscere Dio più profondamente e fare un passo nuovo nel proprio cammino di fede.',
     welcomeEyebrow: 'You Are Welcome Here',
-    welcomeTitle: 'Se e la tua prima visita, c’e posto per te.',
+    welcomeTitle: 'Se è la tua prima visita, c’è posto per te.',
     welcomeText:
-      'Che tu stia tornando alla fede, cercando una comunita o desiderando semplicemente visitare, troverai un ambiente semplice, elegante e pieno di calore umano. Nessuno viene trattato come estraneo: qui sei ricevuto con gioia.',
+      'Che tu stia tornando alla fede, cercando una comunità o desiderando semplicemente visitare, troverai un ambiente semplice, elegante e pieno di calore umano. Nessuno viene trattato come estraneo: qui sei ricevuto con gioia.',
     welcomeBulletA: 'Atmosfera familiare e accoglienza sincera dal primo momento.',
     welcomeBulletB: 'Momenti di lode, preghiera e insegnamento biblico pratico.',
     welcomeBulletC: 'Uno spazio dove crescere spiritualmente insieme ad altri credenti.',
     scheduleEyebrow: 'Orari',
     scheduleTitle: 'Appuntamenti settimanali per pregare, adorare e crescere insieme.',
     schedule: [
-      { title: 'Preghiera', time: 'Martedi alle 20:00' },
+      { title: 'Preghiera', time: 'Martedì alle 20:00' },
       { title: 'Culto', time: 'Domenica alle 17:00' },
     ],
     youtubeEyebrow: 'Messaggio Online',
     youtubeTitle: 'Guarda il nostro ultimo messaggio',
     youtubeText:
-      'Segui la predicazione piu recente, condividi il messaggio con chi ami e resta connesso con la visione del ministero durante la settimana.',
+      'Segui la predicazione più recente, condividi il messaggio con chi ami e resta connesso con la visione del ministero durante la settimana.',
     youtubeButton: 'Iscriviti al canale',
     givingEyebrow: 'Offerte',
     givingTitle: 'Sostenere il ministero significa partecipare alla missione.',
     givingText:
-      'La tua generosita contribuisce a sostenere l’adorazione, la cura della comunita, il lavoro pastorale e la missione della chiesa sul territorio. Ogni offerta diventa uno strumento concreto per servire persone, famiglie e nuove generazioni.',
+      'La tua generosità contribuisce a sostenere l’adorazione, la cura della comunità, il lavoro pastorale e la missione della chiesa sul territorio. Ogni offerta diventa uno strumento concreto per servire persone, famiglie e nuove generazioni.',
     givingCards: [
       {
         title: 'Missione',
-        text: 'Supporti la diffusione del Vangelo e la crescita di una comunita viva e radicata.',
+        text: 'Supporti la diffusione del Vangelo e la crescita di una comunità viva e radicata.',
       },
       {
         title: 'Culto & Produzione',
@@ -137,30 +139,48 @@ const content = {
       },
       {
         title: 'Persone & Famiglie',
-        text: 'Aiuti attivita comunitarie, accoglienza e iniziative che portano speranza concreta.',
+        text: 'Aiuti attività comunitarie, accoglienza e iniziative che portano speranza concreta.',
+      },
+    ],
+    donateHeading: 'Modi per donare',
+    donateIbanLabel: 'IBAN',
+    donateAccounts: [
+      {
+        key: 'chf',
+        currency: 'Conto in CHF',
+        entity: 'Associazione Ministero Internazionale Kabod Ticino',
+        address: 'Via al Fiume 1, 6929 Gravesano — Svizzera',
+        bank: 'Banca Raiffeisen del Vedeggio Gravesano',
+      },
+      {
+        key: 'eur',
+        currency: 'Conto in EURO',
+        entity: 'Associazione Ministero Internazionale Kabod Ticino',
+        address: 'Via al Fiume 1, 6929 Gravesano — Svizzera',
+        bank: 'Banca Raiffeisen del Vedeggio Gravesano',
       },
     ],
     verseEyebrow: 'Parola di Speranza',
-    verseText: '"Poiche io conosco i pensieri che medito per voi, dice il Signore, pensieri di pace e non di male, per darvi un avvenire e una speranza."',
+    verseText: '"Poiché io conosco i pensieri che medito per voi, dice il Signore, pensieri di pace e non di male, per darvi un avvenire e una speranza."',
     verseReference: 'Geremia 29:11',
     faqEyebrow: 'FAQ',
     faqTitle: 'Risposte semplici per preparare la tua visita.',
     faq: [
       {
-        question: 'C’e parcheggio?',
-        answer: 'Si, nelle vicinanze della sede sono disponibili aree di sosta comode per raggiungere la chiesa con tranquillita.',
+        question: 'C’è parcheggio?',
+        answer: 'Sì, nelle vicinanze della sede sono disponibili aree di sosta comode per raggiungere la chiesa con tranquillità.',
       },
       {
         question: 'Come dovrei vestirmi?',
-        answer: 'Vieni come ti senti a tuo agio. Il nostro desiderio e accoglierti con rispetto e semplicità, senza formalismi.',
+        answer: 'Vieni come ti senti a tuo agio. Il nostro desiderio è accoglierti con rispetto e semplicità, senza formalismi.',
       },
       {
-        question: 'C’e un ministero per bambini?',
-        answer: 'Le famiglie sono benvenute. La comunita presta attenzione ai piu piccoli e alla loro integrazione nella vita della chiesa.',
+        question: 'C’è un ministero per bambini?',
+        answer: 'Le famiglie sono benvenute. La comunità presta attenzione ai più piccoli e alla loro integrazione nella vita della chiesa.',
       },
       {
         question: 'Quale lingua viene parlata?',
-        answer: 'La comunita vive un ambiente multiculturale. L’italiano e la lingua principale, con apertura e supporto anche per ospiti internazionali.',
+        answer: 'La comunità vive un ambiente multiculturale. L’italiano è la lingua principale, con apertura e supporto anche per ospiti internazionali.',
       },
       {
         question: 'Cosa devo aspettarmi alla mia prima visita?',
@@ -173,24 +193,24 @@ const content = {
       'Seguici online per messaggi, aggiornamenti, momenti di culto e contenuti che edificano la tua fede. Se desideri visitare la chiesa, saremo felici di accoglierti personalmente.',
     contactAddressLabel: 'Indirizzo',
     contactAddress: 'Via al Fiume 1, dietro Da Moreno, al secondo piano, Gravessano 6929',
-    contactNote: 'Una comunita aperta, familiare e pronta a camminare con te.',
+    contactNote: 'Una comunità aperta, familiare e pronta a camminare con te.',
     footerText: 'Ministero Internazionale Kabod Ticino',
     footerCredit: '© 2026',
     footerTerms: 'Termini e Condizioni',
     backToHomeLabel: 'Torna alla home',
     cookieTitle: 'Preferenze Cookie',
-    cookieText: 'Questo sito utilizza cookie tecnici e funzionali per migliorare l’esperienza di navigazione, la stabilita e la visualizzazione dei contenuti.',
+    cookieText: 'Questo sito utilizza cookie tecnici e funzionali per migliorare l’esperienza di navigazione, la stabilità e la visualizzazione dei contenuti.',
     cookieLink: 'Leggi i Termini e Condizioni',
     cookieButton: 'Accetta',
     cookieRejectButton: 'Rifiuta',
     termsTitle: 'Termini e Condizioni',
     termsIntro:
-      'Accedendo a questo sito, l’utente accetta di utilizzare i contenuti in modo lecito, rispettoso e conforme alla finalita informativa del ministero.',
+      'Accedendo a questo sito, l’utente accetta di utilizzare i contenuti in modo lecito, rispettoso e conforme alla finalità informativa del ministero.',
     termsItems: [
-      'I contenuti del sito hanno finalita informative, spirituali e di contatto con la comunita.',
+      'I contenuti del sito hanno finalità informative, spirituali e di contatto con la comunità.',
       'Gli orari, gli eventi e le informazioni pubblicate possono essere aggiornati senza preavviso.',
       'I link esterni, inclusi YouTube, mappe e social, sono forniti come servizio aggiuntivo e restano soggetti alle rispettive piattaforme.',
-      'I cookie tecnici possono essere utilizzati per migliorare funzionalita, prestazioni e preferenze di navigazione.',
+      'I cookie tecnici possono essere utilizzati per migliorare funzionalità, prestazioni e preferenze di navigazione.',
     ],
     termsClose: 'Chiudi',
   },
@@ -278,6 +298,24 @@ const content = {
         text: 'You help community initiatives, hospitality and activities that bring tangible hope.',
       },
     ],
+    donateHeading: 'Ways to donate',
+    donateIbanLabel: 'IBAN',
+    donateAccounts: [
+      {
+        key: 'chf',
+        currency: 'CHF Account',
+        entity: 'Associazione Ministero Internazionale Kabod Ticino',
+        address: 'Via al Fiume 1, 6929 Gravesano — Switzerland',
+        bank: 'Banca Raiffeisen del Vedeggio Gravesano',
+      },
+      {
+        key: 'eur',
+        currency: 'EUR Account',
+        entity: 'Associazione Ministero Internazionale Kabod Ticino',
+        address: 'Via al Fiume 1, 6929 Gravesano — Switzerland',
+        bank: 'Banca Raiffeisen del Vedeggio Gravesano',
+      },
+    ],
     verseEyebrow: 'Word of Hope',
     verseText: '"For I know the plans I have for you, declares the Lord, plans for peace and not for disaster, to give you a future and a hope."',
     verseReference: 'Jeremiah 29:11',
@@ -335,6 +373,10 @@ const content = {
 };
 
 const menuTargets = ['home', 'about', 'schedule', 'giving', 'faq', 'contact'];
+const donateAssets = {
+  chf: { iban: 'CH87 8080 8002 6654 7104 4', qr: qrFranchi },
+  eur: { iban: 'CH22 8080 8007 2655 0234 1', qr: qrEuro },
+};
 const socialLinks = [
   { icon: 'bi-instagram', label: 'Instagram', href: 'https://www.instagram.com/kabodchurchticino' },
   { icon: 'bi-facebook', label: 'Facebook', href: 'https://www.facebook.com/kabodchurchticino' },
@@ -625,6 +667,34 @@ function App() {
                   </article>
                 </div>
               ))}
+            </div>
+            <div className="donate-block">
+              <h3 className="donate-heading">{copy.donateHeading}</h3>
+              <div className="donate-grid">
+                {copy.donateAccounts.map((acc) => {
+                  const assets = donateAssets[acc.key];
+                  return (
+                    <article key={acc.key} className="donate-card">
+                      <div className="donate-info">
+                        <span className="donate-currency">{acc.currency}</span>
+                        <p className="donate-entity">{acc.entity}</p>
+                        <p className="donate-address">{acc.address}</p>
+                        <p className="donate-iban">
+                          <span className="donate-iban-label">{copy.donateIbanLabel}</span>
+                          <span className="donate-iban-value">{assets.iban}</span>
+                        </p>
+                        <p className="donate-bank">{acc.bank}</p>
+                      </div>
+                      <img
+                        src={assets.qr}
+                        alt={`QR ${acc.currency}`}
+                        className="donate-qr"
+                        loading="lazy"
+                      />
+                    </article>
+                  );
+                })}
+              </div>
             </div>
           </div>
         </RevealSection>

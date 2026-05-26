@@ -532,6 +532,139 @@ main > .content-section:first-child {
   background: linear-gradient(135deg, var(--gold-300), var(--gold-500));
 }
 
+.donate-block {
+  margin-top: 4rem;
+}
+
+.donate-heading {
+  margin: 0 0 2rem;
+  font-family: 'Outfit', sans-serif;
+  font-size: clamp(1.6rem, 2.4vw, 2rem);
+  text-align: center;
+  letter-spacing: -0.02em;
+}
+
+.donate-grid {
+  display: grid;
+  gap: 1.5rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.donate-card {
+  display: grid;
+  grid-template-columns: 1fr 160px;
+  gap: 1.5rem;
+  align-items: center;
+  padding: 1.85rem;
+  background: var(--surface-card);
+  border: 1px solid var(--surface-edge);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+
+.donate-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-deep);
+}
+
+.donate-info {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.donate-currency {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 0.3rem 0.7rem;
+  margin-bottom: 0.4rem;
+  border-radius: 999px;
+  color: var(--navy-900);
+  background: linear-gradient(135deg, var(--gold-300), var(--gold-500));
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.donate-entity {
+  margin: 0;
+  color: var(--text-main);
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.donate-address,
+.donate-bank {
+  margin: 0;
+  color: var(--gray-500);
+  font-size: 0.95rem;
+  line-height: 1.55;
+}
+
+.donate-iban {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0.3rem 0;
+  padding: 0.7rem 0.9rem;
+  background: rgba(31, 77, 184, 0.08);
+  border-radius: var(--radius-sm);
+  border: 1px dashed rgba(31, 77, 184, 0.25);
+}
+
+.donate-iban-label {
+  color: var(--royal-700);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.donate-iban-value {
+  color: var(--text-main);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  word-break: break-all;
+}
+
+.donate-qr {
+  width: 100%;
+  max-width: 160px;
+  height: auto;
+  padding: 0.5rem;
+  border: 1px solid var(--surface-edge);
+  border-radius: var(--radius-sm);
+  background: var(--white);
+}
+
+@media (max-width: 991.98px) {
+  .donate-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .donate-card {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .donate-currency {
+    align-self: center;
+  }
+
+  .donate-iban {
+    justify-content: center;
+  }
+
+  .donate-qr {
+    justify-self: center;
+  }
+}
+
 .verse-card {
   max-width: 840px;
   padding: 3rem 2rem;
