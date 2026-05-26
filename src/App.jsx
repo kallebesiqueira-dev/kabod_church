@@ -101,9 +101,9 @@ const content = {
       },
     ],
     churchEyebrow: 'La Chiesa',
-    churchTitle: 'Nel cuore di Gravessano, Ticino, con un’atmosfera di famiglia e una visione aperta a tutti.',
+    churchTitle: 'Nel cuore di Gravesano, Ticino, con un’atmosfera di famiglia e una visione aperta a tutti.',
     churchText:
-      'La nostra chiesa si trova a Gravessano, Ticino, ed è un luogo dove nuovi visitatori, famiglie, giovani e persone di ogni provenienza possono sentirsi subito accolti. Qui troverai adorazione, preghiera, crescita spirituale e relazioni autentiche in un ambiente sereno e caloroso.',
+      'La nostra chiesa si trova a Gravesano, Ticino, ed è un luogo dove nuovi visitatori, famiglie, giovani e persone di ogni provenienza possono sentirsi subito accolti. Qui troverai adorazione, preghiera, crescita spirituale e relazioni autentiche in un ambiente sereno e caloroso.',
     churchTextSecondary:
       'Crediamo in una comunità multiculturale, viva e accessibile, dove tutti sono benvenuti e dove ogni incontro diventa un’occasione per conoscere Dio più profondamente e fare un passo nuovo nel proprio cammino di fede.',
     welcomeEyebrow: 'You Are Welcome Here',
@@ -116,7 +116,7 @@ const content = {
     scheduleEyebrow: 'Orari',
     scheduleTitle: 'Appuntamenti settimanali per pregare, adorare e crescere insieme.',
     schedule: [
-      { title: 'Preghiera', time: 'Martedì alle 20:00' },
+      { title: 'Preghiera', time: 'Martedì alle 20:15' },
       { title: 'Culto', time: 'Domenica alle 17:00' },
     ],
     youtubeEyebrow: 'Messaggio Online',
@@ -192,7 +192,7 @@ const content = {
     socialText:
       'Seguici online per messaggi, aggiornamenti, momenti di culto e contenuti che edificano la tua fede. Se desideri visitare la chiesa, saremo felici di accoglierti personalmente.',
     contactAddressLabel: 'Indirizzo',
-    contactAddress: 'Via al Fiume 1, dietro Da Moreno, al secondo piano, Gravessano 6929',
+    contactAddress: 'Via al Fiume 1, dietro Da Moreno, al secondo piano, Gravesano 6929',
     contactNote: 'Una comunità aperta, familiare e pronta a camminare con te.',
     footerText: 'Ministero Internazionale Kabod Ticino',
     footerCredit: '© 2026',
@@ -257,9 +257,9 @@ const content = {
       },
     ],
     churchEyebrow: 'The Church',
-    churchTitle: 'In the heart of Gravessano, Ticino, with a family atmosphere and open arms for everyone.',
+    churchTitle: 'In the heart of Gravesano, Ticino, with a family atmosphere and open arms for everyone.',
     churchText:
-      'Our church is located in Gravessano, Ticino, and is a place where new visitors, families, young adults and people from every background can immediately feel at home. Here you will find worship, prayer, spiritual growth and genuine relationships in a peaceful and welcoming setting.',
+      'Our church is located in Gravesano, Ticino, and is a place where new visitors, families, young adults and people from every background can immediately feel at home. Here you will find worship, prayer, spiritual growth and genuine relationships in a peaceful and welcoming setting.',
     churchTextSecondary:
       'We believe in a multicultural community that is alive, accessible and full of grace, where everyone is welcome and every gathering becomes an opportunity to know God more deeply and take a new step in faith.',
     welcomeEyebrow: 'You Are Welcome Here',
@@ -272,7 +272,7 @@ const content = {
     scheduleEyebrow: 'Schedule',
     scheduleTitle: 'Weekly moments to pray, worship and grow together.',
     schedule: [
-      { title: 'Prayer', time: 'Tuesday at 8:00 PM' },
+      { title: 'Prayer', time: 'Tuesday at 8:15 PM' },
       { title: 'Sunday Service', time: 'Sunday at 5:00 PM' },
     ],
     youtubeEyebrow: 'Online Message',
@@ -348,7 +348,7 @@ const content = {
     socialText:
       'Follow us online for messages, updates, worship moments and content that strengthens your faith. If you would like to visit the church, we will be glad to welcome you personally.',
     contactAddressLabel: 'Address',
-    contactAddress: 'Via al Fiume 1, behind Da Moreno, on the second floor, Gravessano 6929',
+    contactAddress: 'Via al Fiume 1, behind Da Moreno, on the second floor, Gravesano 6929',
     contactNote: 'An open, family-centered community ready to walk with you.',
     footerText: 'Ministero Internazionale Kabod Ticino',
     footerCredit: '© 2026',
@@ -770,7 +770,7 @@ function App() {
             <div className="map-frame">
               <iframe
                 title="Kabod Ticino map"
-                src="https://www.google.com/maps?q=Via%20al%20Fiume%201%2C%20Gravessano%206929&z=15&output=embed"
+                src="https://www.google.com/maps?q=Via%20al%20Fiume%201%2C%20Gravesano%206929&z=15&output=embed"
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               />
