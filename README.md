@@ -1,12 +1,14 @@
 # Ministero Internazionale Kabod Ticino Landing Page
 
-A modern bilingual landing page for Ministero Internazionale Kabod Ticino, built with React, Vite, and Bootstrap.
+A bilingual landing page for Ministero Internazionale Kabod Ticino, built with React, Vite and Bootstrap.
 
 ## Overview
 
-This project is a responsive church/ministry landing page designed to present the ministry online with a premium visual identity, bilingual content, smooth scrolling sections, embedded media, location details, and mobile-friendly navigation.
+Responsive single-page site that presents the ministry online: hero with the pastor's photo, about and pastoral leadership sections, church location and welcome, schedule, embedded YouTube message, giving section, FAQ accordion, contact details with map, cookie consent and a terms & conditions modal. Full IT/EN switch with no page reload.
 
 ## Screenshots
+
+> The PNGs in `docs/screenshots/` were captured against an earlier visual; refresh them after the next deploy if you want them to match the current blue/gold palette and the updated footer (YouTube + Email).
 
 ### Hero
 
@@ -22,33 +24,41 @@ This project is a responsive church/ministry landing page designed to present th
 
 ## Features
 
-- Bilingual experience: Italian and English
-- Responsive layout for desktop, tablet, and mobile
-- Hero section with ministry imagery
-- Mobile hamburger navigation
-- About, pastor, church, schedule, YouTube, giving, FAQ, contact, map, and footer sections
-- Cookie consent banner
-- Terms and Conditions modal
-- Footer credits and social links
+- Bilingual content (IT / EN) with persistent `<html lang>` sync
+- Responsive layout (desktop, tablet, mobile) with a dedicated mobile menu
+- Hero with full-bleed background and SVG wave transition
+- Reveal-on-scroll sections via `IntersectionObserver`
+- Mission, pastoral leadership, church, welcome, schedule, video, giving, FAQ, contact and map sections
+- Embedded YouTube message and Google Maps location
+- Cookie consent banner with accept/reject persistence (`localStorage`)
+- Terms & Conditions modal
+- Footer with Instagram, Facebook, YouTube, WhatsApp and Email (opens Gmail compose directly)
+- Back-to-top floating button
 
 ## Tech Stack
 
 - React 18
 - Vite 5
-- Bootstrap 5
-- Bootstrap Icons
+- Bootstrap 5 + Bootstrap Icons
 
 ## Project Structure
 
 ```text
 kabod_church/
-  docs/screenshots/     Project screenshots used in the README
-  img/                 Static image assets
-  public/              SEO and crawler assets
-  src/                 React source files
-  index.html           App entry HTML
-  package.json         Scripts and dependencies
-  vite.config.js       Vite configuration
+  docs/screenshots/     README screenshots
+  img/                  Images imported by the React app (hashed on build)
+  public/               Static files copied verbatim to the site root
+    img/logo.jpg        Stable URL used by site.webmanifest
+    robots.txt
+    sitemap.xml
+    site.webmanifest
+  src/
+    App.jsx             App, content, sections, modals
+    main.jsx            React entry, Bootstrap CSS imports
+    styles.css          Theme tokens and component styles
+  index.html            HTML entry
+  package.json
+  vite.config.js
 ```
 
 ## Getting Started
@@ -64,13 +74,13 @@ kabod_church/
 npm install
 ```
 
-### Start development server
+### Development server
 
 ```bash
 npm run dev
 ```
 
-### Build for production
+### Production build
 
 ```bash
 npm run build
@@ -82,25 +92,31 @@ npm run build
 npm run preview
 ```
 
+## Deployment (Vercel)
+
+The project is ready to deploy on Vercel with zero config — Vercel autodetects Vite (build command `npm run build`, output directory `dist`).
+
+1. Push the repository to GitHub
+2. On vercel.com → **Add New** → **Project** → import the repo
+3. Keep all defaults and click **Deploy**
+
+After the first deploy, update `public/robots.txt` and `public/sitemap.xml` to point to the production URL (currently set to `https://kabod-ticino.vercel.app/`).
+
 ## Content and Assets
 
-All local images used by the landing page are stored in the `img/` directory and imported into the React app.
+- Images imported from JS live in `img/` and are bundled with content hashes by Vite
+- Files in `public/` (including `public/img/logo.jpg` for the PWA manifest) are served as-is at the site root
 
-## SEO and Indexing
+## SEO
 
-This repository includes:
-
-- `public/robots.txt`
-- `public/sitemap.xml`
-
-Important:
-
-Replace `https://your-domain.example` with the real production domain before deployment.
+- `public/robots.txt` allows all crawlers and points to the sitemap
+- `public/sitemap.xml` lists the home page
+- `index.html` sets `title` and `meta description`; `public/site.webmanifest` provides PWA install metadata
 
 ## Security
 
-Please see `SECURITY.md` for vulnerability reporting guidance.
+See `SECURITY.md` for vulnerability reporting.
 
 ## License
 
-This project is released under the MIT License. See `LICENSE` for details.
+MIT — see `LICENSE`.
