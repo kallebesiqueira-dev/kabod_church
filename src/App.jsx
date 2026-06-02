@@ -14,13 +14,33 @@ import qrEuro from '../img/QR/euro.jpeg';
 function HeroBackdrop() {
   const videoRef = useRef(null);
 
-  // Respect users who prefer reduced motion: hold on the first frame.
   useEffect(() => {
     const video = videoRef.current;
-    if (video && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      video.autoplay = false;
-      video.pause();
+    if (!video) {
+      return undefined;
     }
+
+    // React doesn't reliably reflect the `muted` attribute to the DOM property,
+    // and mobile browsers require a genuinely muted video to allow autoplay.
+    video.muted = true;
+    video.defaultMuted = true;
+
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.pause();
+      return undefined;
+    }
+
+    // Start playback explicitly — the autoplay attribute alone is often ignored
+    // on iOS/Android. Retry when the tab/app becomes visible again.
+    const tryPlay = () => {
+      const promise = video.play();
+      if (promise && typeof promise.catch === 'function') {
+        promise.catch(() => {});
+      }
+    };
+    tryPlay();
+    document.addEventListener('visibilitychange', tryPlay);
+    return () => document.removeEventListener('visibilitychange', tryPlay);
   }, []);
 
   return (
@@ -32,6 +52,7 @@ function HeroBackdrop() {
       muted
       playsInline
       preload="auto"
+      poster="/hero-poster.jpg"
       aria-hidden="true"
     >
       <source src="/hero.webm" type="video/webm" />
