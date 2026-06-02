@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import logoImage from '../img/logo.jpg';
-import familyImage from '../img/family.jpg';
+import familyImage from '../img/familly.jpeg';
 import churchImage from '../img/chiesa.jpg';
 import socialImage from '../img/social.jpg';
 import qrFranchi from '../img/QR/franchi.jpeg';
