@@ -1,11 +1,151 @@
 import { useEffect, useRef, useState } from 'react';
-import heroImage from '../img/hero.jpeg';
 import logoImage from '../img/logo.jpg';
 import familyImage from '../img/family.jpg';
 import churchImage from '../img/chiesa.jpg';
 import socialImage from '../img/social.jpg';
 import qrFranchi from '../img/QR/franchi.jpeg';
 import qrEuro from '../img/QR/euro.jpeg';
+
+// Auto-import every frame of the hero video sequence (sky moving / logo still).
+// Sorted numerically so 000 → 079 play in order regardless of OS listing.
+const heroFrameModules = import.meta.glob('../img/framer_hero/*.{jpg,jpeg,png,webp}', {
+  eager: true,
+  import: 'default',
+});
+const heroFrames = Object.keys(heroFrameModules)
+  .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
+  .map((key) => heroFrameModules[key]);
+
+// Plays the frame sequence as a seamless looping video (flipbook).
+// Preloads + decodes every frame first, then advances at a fixed frame rate
+// with requestAnimationFrame so the loop repeats with no flicker or jump.
+// 20fps divides evenly into 60Hz/120Hz displays, so the cadence stays smooth
+// (no uneven frame doubling) while the 80-frame loop runs a calm ~4s.
+function HeroBackdrop({ fps = 20 }) {
+  const canvasRef = useRef(null);
+  const imagesRef = useRef([]);
+  const [ready, setReady] = useState(false);
+
+  // Preload + decode every frame as a real Image element kept in memory.
+  useEffect(() => {
+    if (heroFrames.length === 0) {
+      return undefined;
+    }
+
+    let cancelled = false;
+    const images = heroFrames.map((src) => {
+      const img = new Image();
+      img.src = src;
+      return img;
+    });
+    imagesRef.current = images;
+
+    Promise.all(
+      images.map((img) => (img.decode ? img.decode().catch(() => {}) : Promise.resolve())),
+    ).then(() => {
+      if (!cancelled) {
+        setReady(true);
+      }
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Draw to a canvas — drawImage of an already-decoded bitmap is jank-free,
+  // unlike swapping background-image which re-rasterizes on every paint.
+  useEffect(() => {
+    const canvas = canvasRef.current;
+    if (!canvas) {
+      return undefined;
+    }
+
+    const ctx = canvas.getContext('2d');
+    let index = 0;
+
+    // ===== CONTROLES DA HERO (ajuste estes números) =====
+    // ZOOM:       1.0 = preenche a largura | < 1 afasta | > 1 aproxima (corta laterais).
+    // CROP_TOP:    corta céu de CIMA — sobe a imagem sem mexer embaixo (0.06 = 6%).
+    // CROP_BOTTOM: corta de BAIXO p/ esconder a marca "Veo" (0.09 = 9%).
+    // POS_Y:       posição vertical base. 0 = topo, 0.5 = centro, 1 = base.
+    // Obs: o aspect-ratio da .hero-section no CSS deve casar com estes cortes:
+    //   aspect = 1280 / (720 * (1 - CROP_TOP - CROP_BOTTOM)).
+    const ZOOM = 1.0;
+    const CROP_TOP = 0.06;
+    const CROP_BOTTOM = 0.05;
+    const POS_Y = 0.5;
+
+    const drawFrame = () => {
+      const img = imagesRef.current[index];
+      if (!img || !img.naturalWidth) {
+        return;
+      }
+      const cw = canvas.width;
+      const ch = canvas.height;
+      const sw = img.naturalWidth;
+      const sy = img.naturalHeight * CROP_TOP;
+      const sh = img.naturalHeight * (1 - CROP_TOP - CROP_BOTTOM);
+      // "cover": always fills the whole hero (no blue gaps), and since the hero
+      // matches the cropped video's aspect ratio there is no meaningful crop.
+      const scale = Math.max(cw / sw, ch / sh) * ZOOM;
+      const dw = sw * scale;
+      const dh = sh * scale;
+      const dx = (cw - dw) / 2;
+      const dy = (ch - dh) * POS_Y;
+      // High-quality scaling keeps the logo crisp on every OS / DPR (resizing
+      // the canvas resets these flags, so set them on each draw).
+      ctx.imageSmoothingEnabled = true;
+      ctx.imageSmoothingQuality = 'high';
+      ctx.clearRect(0, 0, cw, ch);
+      ctx.drawImage(img, 0, sy, sw, sh, dx, dy, dw, dh);
+    };
+
+    const resize = () => {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const rect = canvas.getBoundingClientRect();
+      canvas.width = Math.max(1, Math.round(rect.width * dpr));
+      canvas.height = Math.max(1, Math.round(rect.height * dpr));
+      drawFrame();
+    };
+
+    resize();
+    window.addEventListener('resize', resize);
+
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const animate = ready && heroFrames.length > 1 && !reduceMotion;
+
+    let rafId;
+    if (animate) {
+      const frameDuration = 1000 / fps;
+      let last = performance.now();
+      let accumulator = 0;
+
+      const tick = (now) => {
+        accumulator += now - last;
+        last = now;
+        if (accumulator >= frameDuration) {
+          const steps = Math.floor(accumulator / frameDuration);
+          accumulator -= steps * frameDuration;
+          index = (index + steps) % heroFrames.length;
+          drawFrame();
+        }
+        rafId = requestAnimationFrame(tick);
+      };
+
+      rafId = requestAnimationFrame(tick);
+    }
+
+    return () => {
+      window.removeEventListener('resize', resize);
+      if (rafId) {
+        cancelAnimationFrame(rafId);
+      }
+    };
+  }, [ready, fps]);
+
+  return <canvas ref={canvasRef} className="hero-frames" aria-hidden="true" />;
+}
 
 function SectionWave({ className = '' }) {
   return (
@@ -109,7 +249,7 @@ const content = {
     welcomeEyebrow: 'You Are Welcome Here',
     welcomeTitle: 'Se è la tua prima visita, c’è posto per te.',
     welcomeText:
-      'Che tu stia tornando alla fede, cercando una comunità o desiderando semplicemente visitare, troverai un ambiente semplice, elegante e pieno di calore umano. Nessuno viene trattato come estraneo: qui sei ricevuto con gioia.',
+      'Che tu stia tornando alla fede, cerchi una comunità o desideri semplicemente venire a farci visita, troverai un ambiente di persone pronte ad accoglierti con l’amore di Dio! Sei il benvenuto/a!',
     welcomeBulletA: 'Atmosfera familiare e accoglienza sincera dal primo momento.',
     welcomeBulletB: 'Momenti di lode, preghiera e insegnamento biblico pratico.',
     welcomeBulletC: 'Uno spazio dove crescere spiritualmente insieme ad altri credenti.',
@@ -169,10 +309,6 @@ const content = {
       {
         question: 'C’è parcheggio?',
         answer: 'Sì, nelle vicinanze della sede sono disponibili aree di sosta comode per raggiungere la chiesa con tranquillità.',
-      },
-      {
-        question: 'Come dovrei vestirmi?',
-        answer: 'Vieni come ti senti a tuo agio. Il nostro desiderio è accoglierti con rispetto e semplicità, senza formalismi.',
       },
       {
         question: 'C’è un ministero per bambini?',
@@ -265,7 +401,7 @@ const content = {
     welcomeEyebrow: 'You Are Welcome Here',
     welcomeTitle: 'If this is your first visit, there is a place for you here.',
     welcomeText:
-      'Whether you are returning to faith, looking for a church family or simply planning to visit, you will find a space that is elegant, warm and grounded in sincere love. No one is treated like a stranger here.',
+      'Whether you are returning to faith, looking for a community or simply want to come and visit us, you will find a community of people ready to welcome you with the love of God! You are welcome!',
     welcomeBulletA: 'A family atmosphere and sincere hospitality from the first moment.',
     welcomeBulletB: 'Times of worship, prayer and practical biblical teaching.',
     welcomeBulletC: 'A place to grow spiritually alongside other believers.',
@@ -325,10 +461,6 @@ const content = {
       {
         question: 'Is there parking?',
         answer: 'Yes, there are convenient parking areas near the location so you can arrive with ease.',
-      },
-      {
-        question: 'What should I wear?',
-        answer: 'Come as you feel comfortable. Our desire is to welcome you with warmth and simplicity, not formality.',
       },
       {
         question: 'Is there children ministry?',
@@ -395,12 +527,23 @@ function App() {
   const [cookieConsentResolved, setCookieConsentResolved] = useState(true);
   const [showTerms, setShowTerms] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const [navStuck, setNavStuck] = useState(false);
   const copy = content[language];
 
   useEffect(() => {
     document.documentElement.lang = language;
     setShowMobileMenu(false);
   }, [language]);
+
+  // Reveal the sticky menu once the hero has scrolled mostly out of view.
+  useEffect(() => {
+    const onScroll = () => {
+      setNavStuck(window.scrollY > window.innerHeight * 0.6);
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
 
   useEffect(() => {
     const savedPreference = window.localStorage.getItem('kabod-cookie-consent');
@@ -419,6 +562,20 @@ function App() {
 
   return (
     <div className="app-shell">
+      <nav className={`site-nav ${navStuck ? 'is-stuck' : ''}`} aria-label="Primary navigation">
+        <a className="site-nav-brand" href="#home">
+          <img src={logoImage} alt="Kabod Ticino" />
+          <span>Kabod Ticino</span>
+        </a>
+        <div className="site-nav-links">
+          {copy.menu.map((item, index) => (
+            <a key={item} href={`#${menuTargets[index]}`}>
+              {item}
+            </a>
+          ))}
+        </div>
+      </nav>
+
       <div className="language-switcher" role="group" aria-label="Language switcher">
         <button
           type="button"
@@ -457,11 +614,8 @@ function App() {
         ))}
       </nav>
 
-      <header
-        id="home"
-        className="hero-section"
-        style={{ backgroundImage: `url(${heroImage})` }}
-      >
+      <header id="home" className="hero-section">
+        <HeroBackdrop />
         <div className="container position-relative h-100">
           <div className="hero-links-wrap">
             <nav className="hero-links" aria-label="Section navigation">

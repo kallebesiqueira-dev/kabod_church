@@ -4,11 +4,11 @@ A bilingual landing page for Ministero Internazionale Kabod Ticino, built with R
 
 ## Overview
 
-Responsive single-page site that presents the ministry online: hero with the pastor's photo, about and pastoral leadership sections, church location and welcome, schedule, embedded YouTube message, giving section, FAQ accordion, contact details with map, cookie consent and a terms & conditions modal. Full IT/EN switch with no page reload.
+Responsive single-page site that presents the ministry online: hero with a looping animated logo video (the brand logo over a moving sky), about and pastoral leadership sections, church location and welcome, schedule, embedded YouTube message, giving section, FAQ accordion, contact details with map, cookie consent and a terms & conditions modal. Full IT/EN switch with no page reload.
 
 ## Screenshots
 
-> The PNGs in `docs/screenshots/` were captured against an earlier visual; refresh them after the next deploy if you want them to match the current blue/gold palette and the updated footer (YouTube + Email).
+> `hero.png` reflects the current animated-logo hero. `about.png` and `footer.png` were captured against an earlier visual; refresh them after the next deploy if you want them to match the current blue/gold palette and the updated footer (YouTube + Email).
 
 ### Hero
 
@@ -26,7 +26,8 @@ Responsive single-page site that presents the ministry online: hero with the pas
 
 - Bilingual content (IT / EN) with persistent `<html lang>` sync
 - Responsive layout (desktop, tablet, mobile) with a dedicated mobile menu
-- Hero with full-bleed background and SVG wave transition
+- Hero with a looping logo video (80-frame canvas player, crisp on every OS/DPR) and SVG wave transition
+- Sticky desktop nav (centered links) that appears on scroll; hamburger menu on tablet/mobile
 - Reveal-on-scroll sections via `IntersectionObserver`
 - Mission, pastoral leadership, church, welcome, schedule, video, giving, FAQ, contact and map sections
 - Embedded YouTube message and Google Maps location

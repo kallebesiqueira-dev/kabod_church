@@ -43,6 +43,93 @@ img {
   overflow: hidden;
 }
 
+.site-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 25;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 1.5rem;
+  padding: 0.8rem clamp(1rem, 4vw, 3rem);
+  background: rgba(7, 21, 47, 0.72);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 14px 40px rgba(0, 0, 0, 0.25);
+  transform: translateY(-100%);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
+}
+
+.site-nav.is-stuck {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.site-nav-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--white);
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  font-size: 1.05rem;
+}
+
+.site-nav-brand img {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+
+.site-nav-links {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+.site-nav-links a {
+  position: relative;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: color 0.25s ease;
+}
+
+.site-nav-links a:hover {
+  color: var(--gold-300);
+}
+
+.site-nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -0.3rem;
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-300), transparent);
+  transform: scaleX(0);
+  transform-origin: center;
+  transition: transform 0.3s ease;
+}
+
+.site-nav-links a:hover::after {
+  transform: scaleX(1);
+}
+
 .language-switcher {
   position: fixed;
   top: 20px;
@@ -82,15 +169,27 @@ img {
 
 .hero-section {
   position: relative;
-  min-height: 100svh;
+  /* Height tracks the video's aspect (after the top + bottom crops) so the
+     frame fills it exactly: no blue bands, full logo + TICINO on every screen.
+     If you change CROP_TOP / CROP_BOTTOM in App.jsx, update this ratio to match:
+     aspect = 1280 / (720 * (1 - CROP_TOP - CROP_BOTTOM)) = 1280 / 641. */
+  aspect-ratio: 1280 / 641;
   width: 100%;
   color: var(--white);
-  background-position: center 58%;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-color: #09142c;
+  background:
+    radial-gradient(125% 85% at 50% 32%, #1a2c57 0%, #0d1a3a 52%, #070f24 100%);
   isolation: isolate;
   overflow: clip;
+}
+
+.hero-frames {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
 }
 
 .hero-section::before {
@@ -100,12 +199,12 @@ img {
   background:
     linear-gradient(180deg, rgba(6, 16, 41, 0.08), rgba(6, 16, 41, 0.22)),
     linear-gradient(90deg, rgba(6, 16, 41, 0.12), rgba(6, 16, 41, 0.05));
-  z-index: 0;
+  z-index: 1;
 }
 
 .hero-section > .container {
   position: relative;
-  z-index: 2;
+  z-index: 3;
 }
 
 .hero-wave {
@@ -113,7 +212,7 @@ img {
   left: 0;
   right: 0;
   bottom: -2px;
-  z-index: 1;
+  z-index: 2;
   color: var(--surface-light-top);
   line-height: 0;
   pointer-events: none;
@@ -122,7 +221,7 @@ img {
 .hero-wave svg {
   display: block;
   width: 100%;
-  height: clamp(88px, 11vw, 180px);
+  height: clamp(12px, 2.2vw, 40px);
 }
 
 main {
@@ -174,21 +273,21 @@ main > .content-section:first-child {
 
 .hero-links-wrap {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: flex-start;
-  min-height: 100svh;
+  min-height: 0;
   padding-top: 1.25rem;
 }
 
 .hero-links {
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: center;
   gap: 2rem;
-  width: min(100%, 620px);
+  width: min(100%, 720px);
   margin-left: auto;
-  margin-right: 12rem;
-  padding: 0 1rem 0 1rem;
+  margin-right: auto;
+  padding: 0 1rem;
 }
 
 .hero-links a {
@@ -1036,11 +1135,9 @@ main > .content-section:first-child {
     display: none;
   }
 
-  .hero-section {
-    min-height: 0;
-    aspect-ratio: 1376 / 768;
-    background-size: 100% auto;
-    background-position: center bottom;
+  /* Sticky top menu is desktop-only; tablet/mobile use the hamburger + hero menu. */
+  .site-nav {
+    display: none;
   }
 
   main {
@@ -1056,9 +1153,9 @@ main > .content-section:first-child {
   }
 
   .hero-links {
-    width: min(100%, 520px);
-    margin-right: 9rem;
-    padding-right: 0;
+    width: min(100%, 560px);
+    margin-right: auto;
+    padding-right: 1rem;
   }
 
   .welcome-card {
@@ -1102,20 +1199,19 @@ main > .content-section:first-child {
     padding-right: 0;
   }
 
+  /* On phones the video aspect makes a short banner, so make the hero taller
+     and let cover fill it — the logo sits bigger and lower, with no blue gaps. */
+  .hero-section {
+    aspect-ratio: auto;
+    height: 76svh;
+  }
+
   .language-switcher {
     top: 14px;
     right: 14px;
     z-index: 38;
     padding: 0.7rem 0.85rem;
     background: rgba(7, 21, 47, 0.84);
-  }
-
-  .hero-section {
-    min-height: 0;
-    aspect-ratio: 1376 / 768;
-    background-color: #09142c;
-    background-position: center bottom;
-    background-size: 100% auto;
   }
 
   .section-dark {
@@ -1132,10 +1228,6 @@ main > .content-section:first-child {
     bottom: -4px;
   }
 
-  .hero-wave svg {
-    height: 72px;
-  }
-
   main {
     margin-top: 0;
   }
@@ -1145,11 +1237,7 @@ main > .content-section:first-child {
   }
 
   .hero-links-wrap {
-    justify-content: flex-start;
-    align-items: flex-start;
-    min-height: 0;
-    padding-top: 0;
-    padding-bottom: 0;
+    display: none;
   }
 
   .mobile-menu-toggle {
