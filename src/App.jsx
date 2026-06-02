@@ -717,7 +717,7 @@ function App() {
                 <p>{copy.youtubeText}</p>
                 <a
                   className="btn btn-gold"
-                  href="https://www.youtube.com/@KabodTicino"
+                  href="https://www.youtube.com/@KabodChurchTicino"
                   target="_blank"
                   rel="noreferrer"
                 >
