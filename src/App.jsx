@@ -449,7 +449,7 @@ const donateAssets = {
 };
 const socialLinks = [
   { icon: 'bi-instagram', label: 'Instagram', href: 'https://www.instagram.com/kabodchurchticino' },
-  { icon: 'bi-facebook', label: 'Facebook', href: 'https://www.facebook.com/kabodchurchticino' },
+  { icon: 'bi-facebook', label: 'Facebook', href: 'https://www.facebook.com/share/1H7ZkcyEBM/' },
   { icon: 'bi-youtube', label: 'YouTube', href: 'https://www.youtube.com/@kabodchurchticino' },
   { icon: 'bi-whatsapp', label: 'WhatsApp', href: 'https://wa.me/41763428989' },
   {
