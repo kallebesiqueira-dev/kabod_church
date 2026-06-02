@@ -26,7 +26,7 @@ Responsive single-page site that presents the ministry online: hero with a loopi
 
 - Bilingual content (IT / EN) with persistent `<html lang>` sync
 - Responsive layout (desktop, tablet, mobile) with a dedicated mobile menu
-- Hero with a looping logo video (80-frame canvas player, crisp on every OS/DPR) and SVG wave transition
+- Hero with a looping logo video (~1 MB MP4, autoplay/muted/inline with a poster fallback for iOS) and SVG wave transition
 - Sticky desktop nav (centered links) that appears on scroll; hamburger menu on tablet/mobile
 - Reveal-on-scroll sections via `IntersectionObserver`
 - Mission, pastoral leadership, church, welcome, schedule, video, giving, FAQ, contact and map sections
@@ -101,7 +101,7 @@ The project is ready to deploy on Vercel with zero config — Vercel autodetects
 2. On vercel.com → **Add New** → **Project** → import the repo
 3. Keep all defaults and click **Deploy**
 
-After the first deploy, update `public/robots.txt` and `public/sitemap.xml` to point to the production URL (currently set to `https://kabod-ticino.vercel.app/`).
+`public/robots.txt` and `public/sitemap.xml` point to the production URL `https://kabod-church.vercel.app/`. Update them if the domain changes.
 
 ## Content and Assets
 

@@ -141,7 +141,7 @@ const content = {
     aboutEyebrow: 'Chi Siamo',
     aboutTitle: 'Una comunità cristiana che accoglie, adora e cammina insieme.',
     aboutText:
-      'Ministero Internazionale Kabod Ticino è una casa spirituale dove il culto, la comunità e la presenza dello Spirito Santo si incontrano. Crediamo in una fede che trasforma la vita quotidiana, rafforza le famiglie e apre spazi reali di guarigione, speranza e crescita.',
+      'Ministero Internazionale Kabod Ticino è una chiesa spirituale dove il culto, la comunità e la presenza dello Spirito Santo si incontrano. Crediamo in una fede che trasforma la vita quotidiana, rafforza le famiglie e apre spazi reali di guarigione, speranza e crescita.',
     aboutTextSecondary:
       'Qui troverai un ambiente accogliente, multiculturale e familiare, in cui ogni persona viene incoraggiata a conoscere Dio, vivere la Sua Parola e costruire relazioni sincere. La nostra missione è servire con amore, formare discepoli e vedere vite rinnovate dalla grazia di Gesù.',
     missionCards: [
@@ -293,7 +293,7 @@ const content = {
     aboutEyebrow: 'About Us',
     aboutTitle: 'A Christian community that welcomes, worships and walks together.',
     aboutText:
-      'Ministero Internazionale Kabod Ticino is a spiritual home where worship, community and the presence of the Holy Spirit meet. We believe in a faith that transforms everyday life, strengthens families and opens real space for healing, hope and growth.',
+      'Ministero Internazionale Kabod Ticino is a spiritual church where worship, community and the presence of the Holy Spirit meet. We believe in a faith that transforms everyday life, strengthens families and opens real space for healing, hope and growth.',
     aboutTextSecondary:
       'Here you will find a warm, multicultural and family-oriented environment where every person is encouraged to know God, live His Word and build sincere relationships. Our mission is to serve with love, make disciples and see lives renewed by the grace of Jesus.',
     missionCards: [

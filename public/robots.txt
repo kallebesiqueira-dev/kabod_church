@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://kabod-ticino.vercel.app/sitemap.xml
+Sitemap: https://kabod-church.vercel.app/sitemap.xml
