@@ -556,6 +556,8 @@ main > .content-section:first-child {
 }
 
 .pastor-photo-card {
+  /* Let the card size itself to the photo so nothing is cropped. */
+  min-height: 0;
   border-top-left-radius: 40% 10%;
   border-top-right-radius: 40% 10%;
   border-bottom-left-radius: var(--radius-xl);
@@ -563,11 +565,12 @@ main > .content-section:first-child {
 }
 
 .pastor-photo-card img {
+  height: auto;
+  object-fit: contain;
   border-top-left-radius: 40% 10%;
   border-top-right-radius: 40% 10%;
   border-bottom-left-radius: var(--radius-xl);
   border-bottom-right-radius: var(--radius-xl);
-  object-position: center 60%;
 }
 
 .image-card-wide {
