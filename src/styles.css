@@ -567,7 +567,7 @@ main > .content-section:first-child {
   border-top-right-radius: 40% 10%;
   border-bottom-left-radius: var(--radius-xl);
   border-bottom-right-radius: var(--radius-xl);
-  object-position: center bottom;
+  object-position: center 60%;
 }
 
 .image-card-wide {
