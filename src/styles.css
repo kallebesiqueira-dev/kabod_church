@@ -169,11 +169,9 @@ img {
 
 .hero-section {
   position: relative;
-  /* Height tracks the video's aspect (after the top + bottom crops) so the
-     frame fills it exactly: no blue bands, full logo + TICINO on every screen.
-     If you change CROP_TOP / CROP_BOTTOM in App.jsx, update this ratio to match:
-     aspect = 1280 / (720 * (1 - CROP_TOP - CROP_BOTTOM)) = 1280 / 641. */
-  aspect-ratio: 1280 / 641;
+  /* Matches the hero video's aspect (1280x640, crops already baked in) so it
+     fills the hero with no blue bands and the full logo + TICINO show. */
+  aspect-ratio: 1280 / 640;
   width: 100%;
   color: var(--white);
   background:
@@ -189,6 +187,8 @@ img {
   display: block;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  object-position: center;
   background-color: transparent;
 }
 

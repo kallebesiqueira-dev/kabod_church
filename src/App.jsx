@@ -6,145 +6,38 @@ import socialImage from '../img/social.jpg';
 import qrFranchi from '../img/QR/franchi.jpeg';
 import qrEuro from '../img/QR/euro.jpeg';
 
-// Auto-import every frame of the hero video sequence (sky moving / logo still).
-// Sorted numerically so 000 → 079 play in order regardless of OS listing.
-const heroFrameModules = import.meta.glob('../img/framer_hero/*.{jpg,jpeg,png,webp}', {
-  eager: true,
-  import: 'default',
-});
-const heroFrames = Object.keys(heroFrameModules)
-  .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }))
-  .map((key) => heroFrameModules[key]);
+// Hero background: a looping logo video (sky in motion, logo still). The clip
+// is encoded from the original frames with the top sky and the "Veo" watermark
+// already cropped out, so it just needs object-fit: cover to fill the hero.
+// webm first (smaller), mp4 fallback for universal support. A native <video>
+// is GPU-decoded and ~1 MB — far lighter than the 80-frame canvas player.
+function HeroBackdrop() {
+  const videoRef = useRef(null);
 
-// Plays the frame sequence as a seamless looping video (flipbook).
-// Preloads + decodes every frame first, then advances at a fixed frame rate
-// with requestAnimationFrame so the loop repeats with no flicker or jump.
-// 20fps divides evenly into 60Hz/120Hz displays, so the cadence stays smooth
-// (no uneven frame doubling) while the 80-frame loop runs a calm ~4s.
-function HeroBackdrop({ fps = 20 }) {
-  const canvasRef = useRef(null);
-  const imagesRef = useRef([]);
-  const [ready, setReady] = useState(false);
-
-  // Preload + decode every frame as a real Image element kept in memory.
+  // Respect users who prefer reduced motion: hold on the first frame.
   useEffect(() => {
-    if (heroFrames.length === 0) {
-      return undefined;
+    const video = videoRef.current;
+    if (video && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      video.autoplay = false;
+      video.pause();
     }
-
-    let cancelled = false;
-    const images = heroFrames.map((src) => {
-      const img = new Image();
-      img.src = src;
-      return img;
-    });
-    imagesRef.current = images;
-
-    Promise.all(
-      images.map((img) => (img.decode ? img.decode().catch(() => {}) : Promise.resolve())),
-    ).then(() => {
-      if (!cancelled) {
-        setReady(true);
-      }
-    });
-
-    return () => {
-      cancelled = true;
-    };
   }, []);
 
-  // Draw to a canvas — drawImage of an already-decoded bitmap is jank-free,
-  // unlike swapping background-image which re-rasterizes on every paint.
-  useEffect(() => {
-    const canvas = canvasRef.current;
-    if (!canvas) {
-      return undefined;
-    }
-
-    const ctx = canvas.getContext('2d');
-    let index = 0;
-
-    // ===== CONTROLES DA HERO (ajuste estes números) =====
-    // ZOOM:       1.0 = preenche a largura | < 1 afasta | > 1 aproxima (corta laterais).
-    // CROP_TOP:    corta céu de CIMA — sobe a imagem sem mexer embaixo (0.06 = 6%).
-    // CROP_BOTTOM: corta de BAIXO p/ esconder a marca "Veo" (0.09 = 9%).
-    // POS_Y:       posição vertical base. 0 = topo, 0.5 = centro, 1 = base.
-    // Obs: o aspect-ratio da .hero-section no CSS deve casar com estes cortes:
-    //   aspect = 1280 / (720 * (1 - CROP_TOP - CROP_BOTTOM)).
-    const ZOOM = 1.0;
-    const CROP_TOP = 0.06;
-    const CROP_BOTTOM = 0.05;
-    const POS_Y = 0.5;
-
-    const drawFrame = () => {
-      const img = imagesRef.current[index];
-      if (!img || !img.naturalWidth) {
-        return;
-      }
-      const cw = canvas.width;
-      const ch = canvas.height;
-      const sw = img.naturalWidth;
-      const sy = img.naturalHeight * CROP_TOP;
-      const sh = img.naturalHeight * (1 - CROP_TOP - CROP_BOTTOM);
-      // "cover": always fills the whole hero (no blue gaps), and since the hero
-      // matches the cropped video's aspect ratio there is no meaningful crop.
-      const scale = Math.max(cw / sw, ch / sh) * ZOOM;
-      const dw = sw * scale;
-      const dh = sh * scale;
-      const dx = (cw - dw) / 2;
-      const dy = (ch - dh) * POS_Y;
-      // High-quality scaling keeps the logo crisp on every OS / DPR (resizing
-      // the canvas resets these flags, so set them on each draw).
-      ctx.imageSmoothingEnabled = true;
-      ctx.imageSmoothingQuality = 'high';
-      ctx.clearRect(0, 0, cw, ch);
-      ctx.drawImage(img, 0, sy, sw, sh, dx, dy, dw, dh);
-    };
-
-    const resize = () => {
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
-      const rect = canvas.getBoundingClientRect();
-      canvas.width = Math.max(1, Math.round(rect.width * dpr));
-      canvas.height = Math.max(1, Math.round(rect.height * dpr));
-      drawFrame();
-    };
-
-    resize();
-    window.addEventListener('resize', resize);
-
-    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const animate = ready && heroFrames.length > 1 && !reduceMotion;
-
-    let rafId;
-    if (animate) {
-      const frameDuration = 1000 / fps;
-      let last = performance.now();
-      let accumulator = 0;
-
-      const tick = (now) => {
-        accumulator += now - last;
-        last = now;
-        if (accumulator >= frameDuration) {
-          const steps = Math.floor(accumulator / frameDuration);
-          accumulator -= steps * frameDuration;
-          index = (index + steps) % heroFrames.length;
-          drawFrame();
-        }
-        rafId = requestAnimationFrame(tick);
-      };
-
-      rafId = requestAnimationFrame(tick);
-    }
-
-    return () => {
-      window.removeEventListener('resize', resize);
-      if (rafId) {
-        cancelAnimationFrame(rafId);
-      }
-    };
-  }, [ready, fps]);
-
-  return <canvas ref={canvasRef} className="hero-frames" aria-hidden="true" />;
+  return (
+    <video
+      ref={videoRef}
+      className="hero-frames"
+      autoPlay
+      loop
+      muted
+      playsInline
+      preload="auto"
+      aria-hidden="true"
+    >
+      <source src="/hero.webm" type="video/webm" />
+      <source src="/hero.mp4" type="video/mp4" />
+    </video>
+  );
 }
 
 function SectionWave({ className = '' }) {
