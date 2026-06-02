@@ -9,10 +9,24 @@ import qrEuro from '../img/QR/euro.jpeg';
 // Hero background: a looping logo video (sky in motion, logo still). The clip
 // is encoded from the original frames with the top sky and the "Veo" watermark
 // already cropped out, so it just needs object-fit: cover to fill the hero.
-// webm first (smaller), mp4 fallback for universal support. A native <video>
-// is GPU-decoded and ~1 MB — far lighter than the 80-frame canvas player.
+// A native <video> is GPU-decoded and ~1 MB and very light on memory (unlike an
+// 80-frame canvas player, which decodes hundreds of MB and can stall iOS).
+// MP4/H.264 only — the single universally supported format, so iOS never has to
+// fall through a source it can't play.
 function HeroBackdrop() {
   const videoRef = useRef(null);
+
+  // Set `muted` the instant the element exists, before the browser evaluates
+  // autoplay — React doesn't reliably reflect the muted attribute, and iOS /
+  // Android only autoplay a genuinely muted, inline video.
+  const attachVideo = (node) => {
+    videoRef.current = node;
+    if (node) {
+      node.muted = true;
+      node.defaultMuted = true;
+      node.setAttribute('muted', '');
+    }
+  };
 
   useEffect(() => {
     const video = videoRef.current;
@@ -20,32 +34,43 @@ function HeroBackdrop() {
       return undefined;
     }
 
-    // React doesn't reliably reflect the `muted` attribute to the DOM property,
-    // and mobile browsers require a genuinely muted video to allow autoplay.
-    video.muted = true;
-    video.defaultMuted = true;
-
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
       video.pause();
       return undefined;
     }
 
-    // Start playback explicitly — the autoplay attribute alone is often ignored
-    // on iOS/Android. Retry when the tab/app becomes visible again.
+    // The autoplay attribute alone is often ignored on mobile, so kick playback
+    // off ourselves and retry on the events where iOS tends to allow it.
     const tryPlay = () => {
+      video.muted = true;
       const promise = video.play();
       if (promise && typeof promise.catch === 'function') {
         promise.catch(() => {});
       }
     };
+
     tryPlay();
+    video.addEventListener('canplay', tryPlay);
+    video.addEventListener('loadeddata', tryPlay);
     document.addEventListener('visibilitychange', tryPlay);
-    return () => document.removeEventListener('visibilitychange', tryPlay);
+    // Last resort (e.g. iOS Low Power Mode blocks autoplay outright): start on
+    // the first tap/click anywhere on the page.
+    const onFirstInteraction = () => tryPlay();
+    document.addEventListener('touchstart', onFirstInteraction, { once: true, passive: true });
+    document.addEventListener('click', onFirstInteraction, { once: true });
+
+    return () => {
+      video.removeEventListener('canplay', tryPlay);
+      video.removeEventListener('loadeddata', tryPlay);
+      document.removeEventListener('visibilitychange', tryPlay);
+      document.removeEventListener('touchstart', onFirstInteraction);
+      document.removeEventListener('click', onFirstInteraction);
+    };
   }, []);
 
   return (
     <video
-      ref={videoRef}
+      ref={attachVideo}
       className="hero-frames"
       autoPlay
       loop
@@ -55,7 +80,6 @@ function HeroBackdrop() {
       poster="/hero-poster.jpg"
       aria-hidden="true"
     >
-      <source src="/hero.webm" type="video/webm" />
       <source src="/hero.mp4" type="video/mp4" />
     </video>
   );
